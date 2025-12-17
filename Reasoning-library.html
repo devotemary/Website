@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reasoning Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* --- iOS Theming (Matches previous pages) --- */
+        :root {
+            --ios-bg: #000000;
+            --ios-card-glass: rgba(28, 28, 30, 0.65);
+            --ios-border: rgba(255, 255, 255, 0.12);
+            --ios-text: #ffffff;
+            --ios-subtext: #86868b;
+            --ios-blue: #0A84FF;
+            --ios-search-bg: rgba(118, 118, 128, 0.24);
+            --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--ios-bg);
+            /* Consistent Gradient Background */
+            background-image: 
+                radial-gradient(circle at 10% 20%, #4a1d96 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, #004dcf 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--ios-text);
+            padding-bottom: 60px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Navigation Bar --- */
+        nav {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--ios-blue);
+            font-size: 17px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .back-link::before {
+            content: '‹'; 
+            font-size: 24px;
+            margin-right: 4px;
+            margin-top: -2px;
+        }
+
+        /* --- Header & Search --- */
+        header {
+            padding: 10px 20px 30px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        header h1 {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: var(--ios-subtext);
+            margin-bottom: 20px;
+        }
+
+        /* iOS Style Search Bar */
+        .search-container {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--ios-search-bg);
+            border: none;
+            padding: 12px 15px 12px 40px; /* space for icon */
+            border-radius: 10px;
+            color: white;
+            font-size: 17px;
+            outline: none;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ios-subtext);
+            font-size: 16px;
+        }
+
+        /* --- Grid Layout --- */
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Smaller cards for high volume */
+            gap: 15px;
+        }
+
+        /* --- Compact Video Card --- */
+        .card {
+            background: var(--ios-card-glass);
+            border-radius: 16px;
+            padding: 18px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--ios-border);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            background: rgba(44, 44, 46, 0.8);
+        }
+
+        .card-number {
+            font-size: 12px;
+            color: var(--ios-subtext);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .play-btn {
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--ios-blue);
+            padding: 8px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .play-btn:hover {
+            background: var(--ios-blue);
+            color: white;
+        }
+        
+        /* Helper for empty search */
+        .no-results {
+            text-align: center;
+            color: var(--ios-subtext);
+            margin-top: 50px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="sections.html" class="back-link">Back</a>
+</nav>
+
+<header>
+    <h1>Reasoning</h1>
+    <p>70 Lecture Series</p>
+    
+    <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search topics (e.g. 'Blood Relations')...">
+    </div>
+</header>
+
+<div class="container">
+    <div id="videoGrid" class="video-grid">
+        <!-- Javascript will inject cards here -->
+    </div>
+    <div id="noResults" class="no-results">No videos found.</div>
+</div>
+
+<script>
+    // ==========================================
+    // PASTE YOUR 70 LINKS HERE
+    // ==========================================
+    const videoData = [
+        { title: "Class 01: Introduction", link: "https://drive.google.com/file/d/11iYZldLhuptEyy0RXuqhsG65JLqAwTgS/view?usp=drivesdk" },
+        { title: "Class 02: Coding Decoding 1", link: "" },
+        { title: "Class 03: Coding Decoding 2", link: "" },
+        { title: "Class 04: Blood Relations", link: "https://drive.google.com/file/d/YOUR_LINK_HERE" },
+        { title: "Class 05: Direction Sense", link: "https://drive.google.com/file/d/YOUR_LINK_HERE" },
+        // ... Keep adding until you reach 70
+        // Just copy the line above and change the number/title/link
+        { title: "Class 69: Advanced Puzzles", link: "https://drive.google.com/file/d/YOUR_LINK_HERE" },
+        { title: "Class 70: Final Review", link: "https://drive.google.com/file/d/YOUR_LINK_HERE" } 
+    ];
+
+    // ==========================================
+    // LOGIC TO GENERATE CARDS (Do not touch)
+    // ==========================================
+    const grid = document.getElementById('videoGrid');
+    const searchInput = document.getElementById('searchInput');
+    const noResults = document.getElementById('noResults');
+
+    // 1. Function to create HTML for videos
+    function renderVideos(videos) {
+        grid.innerHTML = ''; // Clear current grid
+        
+        if(videos.length === 0) {
+            noResults.style.display = 'block';
+            return;
+        } else {
+            noResults.style.display = 'none';
+        }
+
+        videos.forEach((video, index) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            card.innerHTML = `
+                <div>
+                    <div class="card-number">Ep. ${index + 1}</div>
+                    <h3>${video.title}</h3>
+                </div>
+                <a href="${video.link}" target="_blank" class="play-btn">
+                    Play Video
+                </a>
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    // 2. Initial Render of all videos
+    renderVideos(videoData);
+
+    // 3. Search Filter Logic
+    searchInput.addEventListener('keyup', (e) => {
+        const term = e.target.value.toLowerCase();
+        const filtered = videoData.filter(video => 
+            video.title.toLowerCase().includes(term)
+        );
+        renderVideos(filtered);
+    });
+
+</script>
+
+</body>
+</html>
