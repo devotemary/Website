@@ -2,104 +2,152 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Website</title>
+    <title>Library</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+        /* --- iOS Theming & Variables (Matches Welcome Page) --- */
+        :root {
+            --ios-bg: #000000;
+            --ios-card-glass: rgba(28, 28, 30, 0.65);
+            --ios-border: rgba(255, 255, 255, 0.12);
+            --ios-text: #ffffff;
+            --ios-subtext: #86868b;
+            --ios-blue: #0A84FF; /* iOS Dark Mode Blue */
+            --ios-blue-hover: #409CFF;
+            --font-stack: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
         }
 
         body {
-            background: #0f172a;
-            color: #e5e7eb;
-            line-height: 1.6;
+            font-family: var(--font-stack);
+            background-color: var(--ios-bg);
+            /* Fixed background to keep the gradient steady while scrolling */
+            background-image: 
+                radial-gradient(circle at 20% 10%, #4a1d96 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, #004dcf 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--ios-text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 40px;
         }
 
+        /* --- Header --- */
         header {
-            background: #020617;
-            padding: 20px;
+            padding: 60px 20px 20px 20px;
             text-align: center;
-            border-bottom: 2px solid #1e293b;
+            /* No border, just space */
         }
 
         header h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            margin-bottom: 5px;
         }
 
         header p {
-            font-size: 14px;
-            color: #94a3b8;
+            font-size: 15px;
+            color: var(--ios-subtext);
+            font-weight: 400;
         }
 
+        /* --- Layout --- */
         .container {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: auto;
-            padding: 20px;
+            padding: 0 20px;
+            
+            /* Entry Animation */
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
         }
 
         .section-title {
             font-size: 22px;
-            margin-bottom: 15px;
-            border-left: 4px solid #38bdf8;
-            padding-left: 10px;
+            font-weight: 700;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            color: var(--ios-text);
+            /* Removed the side border for a cleaner iOS header look */
         }
 
         .media-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
 
+        /* --- iOS Widget Cards --- */
         .card {
-            background: #020617;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.4);
-            transition: transform 0.2s;
+            background: var(--ios-card-glass);
+            border-radius: 22px; /* Smooth 'Squircle' corners */
+            padding: 24px;
+            
+            /* Glass Effect */
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--ios-border);
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: scale(1.02);
+            background: rgba(44, 44, 46, 0.8);
         }
 
         .card h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 6px;
         }
 
         .card p {
-            font-size: 14px;
-            color: #9ca3af;
-            margin-bottom: 12px;
+            font-size: 15px;
+            color: var(--ios-subtext);
+            margin-bottom: 25px;
+            flex-grow: 1;
         }
 
+        /* --- Action Button (App Store Style) --- */
         .btn {
-            display: inline-block;
+            display: block;
+            text-align: center;
             text-decoration: none;
-            padding: 8px 14px;
-            background: #38bdf8;
-            color: #020617;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: bold;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--ios-blue);
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: background 0.2s ease;
         }
 
         .btn:hover {
-            background: #0ea5e9;
+            background: var(--ios-blue);
+            color: white;
         }
 
+        /* --- Footer --- */
         footer {
-            margin-top: 40px;
-            padding: 15px;
+            margin-top: 60px;
             text-align: center;
-            background: #020617;
             font-size: 13px;
-            color: #94a3b8;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -107,44 +155,56 @@
 <body>
 
 <header>
-    <h1>Collection</h1>
+    <h1>Library</h1>
     <p>Movies • Videos • Documents • Notes</p>
 </header>
 
 <div class="container">
 
-    <h2 class="section-title">Media</h2>
+    <h2 class="section-title">Recent Media</h2>
 
     <div class="media-grid">
 
+        <!-- Card 1 -->
         <div class="card">
-            <h3>Movie</h3>
-            <p></p>
+            <div>
+                <h3>Movie</h3>
+                <p>Latest collection</p>
+            </div>
             <a class="btn" href="https://drive.google.com/file/d/FILE_ID/view" target="_blank">
-                Watch / Download
+                Watch
             </a>
         </div>
 
+        <!-- Card 2 -->
         <div class="card">
-            <h3>Lecture Video</h3>
-            <p>Educational video content</p>
+            <div>
+                <h3>Lecture Video</h3>
+                <p>Educational content</p>
+            </div>
             <a class="btn" href="https://drive.google.com/file/d/FILE_ID/view" target="_blank">
                 Open Video
             </a>
         </div>
 
+        <!-- Card 3 -->
         <div class="card">
-            <h3>PDF Notes</h3>
-            <p>Study notes in PDF format</p>
+            <div>
+                <h3>PDF Notes</h3>
+                <p>Study materials</p>
+            </div>
             <a class="btn" href="https://drive.google.com/file/d/FILE_ID/view" target="_blank">
                 View PDF
             </a>
         </div>
 
+        <!-- Card 4 -->
         <div class="card">
-            <h3>Golden Brown</h3>
-            <p>audio content</p>
-            <a class="btn" href="https://drive.google.com/file/d/14ErIIB5Mpfv_YcPmJF7swm-5vT4IdTc1/view?usp=drivesdk" target="_blank">
+            <div>
+                <h3>Music</h3>
+                <p>Audio Library</p>
+            </div>
+            <a class="btn" href="Music-library.html" target="_blank">
                 Listen
             </a>
         </div>
@@ -154,7 +214,7 @@
 </div>
 
 <footer>
-    © 2025 | Hosted by Devloper 
+    Designed by Developer
 </footer>
 
 </body>
